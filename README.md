@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6th Grade English - Unit 7 Lesson 2</title>
+    <title>7th Grade English - Unit 7 Lesson 2 (Workbook)</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -11,7 +11,7 @@
             max-width: 850px; 
             margin: auto; 
             padding: 20px; 
-            background-color: #f0f2f5; 
+            background-color: #e9ecef; 
             -webkit-user-select: none; 
             user-select: none; 
         }
@@ -40,7 +40,7 @@
 
         .header { 
             text-align: center; 
-            border-bottom: 3px solid #6f42c1; 
+            border-bottom: 3px solid #007bff; 
             margin-bottom: 25px; 
             padding-bottom: 10px;
         }
@@ -56,21 +56,17 @@
         .word-bank {
             background-color: #f8f9fa;
             padding: 15px;
-            border: 2px dashed #6f42c1;
+            border: 2px dashed #007bff;
             border-radius: 8px;
             margin-bottom: 15px;
             text-align: center;
             font-weight: bold;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
         }
         
         .answer-line {
             border: none; 
-            border-bottom: 2px solid #6f42c1; 
-            width: 130px; 
+            border-bottom: 2px solid #007bff; 
+            width: 150px; 
             outline: none; 
             background: transparent;
             font-size: 16px;
@@ -79,12 +75,10 @@
         }
 
         .btn { padding: 12px 25px; cursor: pointer; border: none; border-radius: 5px; font-size: 16px; margin: 10px; font-weight: bold; transition: 0.3s; }
-        .btn-start { background-color: #6f42c1; color: white; width: 280px; }
-        .btn-start:hover { background-color: #59359a; }
+        .btn-start { background-color: #007bff; color: white; width: 280px; }
+        .btn-start:hover { background-color: #0056b3; }
         .btn-submit { background-color: #28a745; color: white; width: 100%; margin-top: 20px; }
         .btn-submit:hover { background-color: #218838; }
-
-        .instruction { font-style: italic; color: #555; font-size: 0.9em; }
 
         @media print { .no-print { display: none; } }
     </style>
@@ -106,11 +100,11 @@
 
 <div id="main-container">
     <div id="start-area" style="text-align: center; padding: 50px;">
-        <img src="https://img.icons8.com/color/96/000000/clown.png" alt="Show"><br>
-        <h2>English Workbook - Unit 7</h2>
-        <h3>Lesson 2: WOW! Team Talk</h3>
-        <p style="color: #6c757d;">Focus: Puppeteers, Comedians, and Talent Shows</p>
-        <button class="btn btn-start" onclick="startExam()">Start Practice Now</button>
+        <img src="https://img.icons8.com/color/96/000000/learning.png" alt="Learn"><br>
+        <h2>Workbook Page 27</h2>
+        <h3>Unit 7: WOW! Team Talk</h3>
+        <p style="color: #6c757d;">Focus: Dialogue Completion and Reading Comprehension</p>
+        <button class="btn btn-start" onclick="startExam()">Start Workbook Activity</button>
     </div>
 
     <div id="exam-content">
@@ -118,44 +112,57 @@
             <h1>Unit 7: Lesson 2 Interactive</h1>
             <div style="display: flex; justify-content: space-between; padding: 10px;">
                 <div><strong>Student:</strong> <input type="text" id="studentName" placeholder="Enter Name..." class="answer-line" style="width: 200px;"></div>
-                <div><strong>Grade:</strong> 6th Grade</div>
+                <div><strong>Grade:</strong> 6th Grade / Unit 7</div>
             </div>
         </div>
 
         <div class="question-box">
-            <h3>1. Read and complete the sentences:</h3>
+            <h3>1. Complete the sentences from the dialogue:</h3>
             <div class="word-bank">
-                body | comedian | cool | costume | funny | strings | control | time | go
+                body | comedian | cool | costume | go | man | strings
             </div>
             <p>1. I like your clown <input type="text" id="v1" class="answer-line">, Arlo.</p>
             <p>2. They're difficult to <input type="text" id="v2" class="answer-line"> and they both have <input type="text" id="v3" class="answer-line">.</p>
             <p>3. Very <input type="text" id="v4" class="answer-line">, Faisal! You should be a <input type="text" id="v5" class="answer-line">.</p>
             <p>4. That's <input type="text" id="v6" class="answer-line">. Is he <input type="text" id="v7" class="answer-line">?</p>
             <p>5. What do you call a <input type="text" id="v8" class="answer-line"> with a big nose and no <input type="text" id="v9" class="answer-line">?</p>
-            <p>6. Oh, it's <input type="text" id="v10" class="answer-line"> for the WOW! Talent Show. Let's <input type="text" id="v11" class="answer-line">!</p>
+            <p>6. Oh, it's time for the WOW! Talent Show. Let's <input type="text" id="v10" class="answer-line">!</p>
         </div>
 
         <div class="question-box">
-            <h3>2. Answer the questions (Complete Sentences):</h3>
+            <h3>2. Answer the questions (Complete sentences):</h3>
             <p>1. Why is Arlo's costume a bit small?<br>
-            <input type="text" id="q1" class="answer-line" style="width: 100%;"> (Hint: He's had it for...)</p>
+            <input type="text" id="q1" class="answer-line" style="width: 90%; text-align: left;"></p>
             
             <p>2. When did Arlo start to be a puppeteer?<br>
-            <input type="text" id="q2" class="answer-line" style="width: 100%;"></p>
-
+            <input type="text" id="q2" class="answer-line" style="width: 90%; text-align: left;"></p>
+            
             <p>3. When did Faisal's uncle become a comedian?<br>
-            <input type="text" id="q3" class="answer-line" style="width: 100%;"></p>
+            <input type="text" id="q3" class="answer-line" style="width: 90%; text-align: left;"></p>
         </div>
 
         <div class="question-box">
-            <h3>3. Complete the Dialogue with Expressions:</h3>
+            <h3>3. Read and complete the dialogues:</h3>
             <div class="word-bank">I've no idea | That's cool! | I get it!</div>
             <div style="font-style: italic; background: #f9f9f9; padding: 15px; border-radius: 5px;">
-                <strong>A:</strong> I'm going to be in the talent show! Telling jokes!<br>
-                <strong>B:</strong> <input type="text" id="ex1" class="answer-line">. Why can't a bike stand up by itself?<br>
-                <strong>A:</strong> <input type="text" id="ex2" class="answer-line">.<br>
-                <strong>B:</strong> Because it's two-tyred! Do you understand?<br>
-                <strong>A:</strong> Yes, <input type="text" id="ex3" class="answer-line">! That's funny!
+                <strong>Dialogue 1:</strong><br>
+                <strong>A:</strong> I'm going to be in the talent show!<br>
+                <strong>B:</strong> <input type="text" id="ex1" class="answer-line">! What's your talent?<br>
+                <strong>A:</strong> Telling jokes! Why can't a bike stand up by itself?<br>
+                <strong>B:</strong> <input type="text" id="ex2" class="answer-line">.<br>
+                <strong>A:</strong> Because it's two-tyred! Do you understand?<br>
+                <strong>B:</strong> Yes, <input type="text" id="ex3" class="answer-line">! That's funny!
+            </div>
+            <br>
+            <div style="font-style: italic; background: #f9f9f9; padding: 15px; border-radius: 5px;">
+                <strong>Dialogue 2:</strong><br>
+                <strong>A:</strong> What time does the talent show start?<br>
+                <strong>B:</strong> <input type="text" id="ex4" class="answer-line">. No one told me.<br>
+                <strong>A:</strong> What are you going to do?<br>
+                <strong>B:</strong> I'm going to make people laugh.<br>
+                <strong>A:</strong> <input type="text" id="ex5" class="answer-line">! So are you a comedian?<br>
+                <strong>B:</strong> No, I'm a puppeteer!<br>
+                <strong>A:</strong> Oh, <input type="text" id="ex6" class="answer-line">! That's funny!
             </div>
         </div>
         
@@ -164,7 +171,7 @@
 </div>
 
 <script>
-    const TEACHER_SECRET = "0808"; 
+    const TEACHER_SECRET = "0101"; 
 
     function startExam() {
         if (localStorage.getItem("wb_unit7_status") === "locked") {
@@ -177,19 +184,29 @@
 
     function submitExam() {
         let score = 0;
+        const totalPoints = 19;
         const name = document.getElementById('studentName').value;
         if (!name) { alert("Please enter your name!"); return; }
 
-        // Vocab Check (based on workbook page text)
-        const vocabAnswers = ["costume", "control", "strings", "funny", "comedian", "cool", "funny", "man", "body", "time", "go"];
-        
-        // This is a simplified check for the demo
-        if(document.getElementById('v1').value.toLowerCase().trim() === "costume") score++;
-        if(document.getElementById('v4').value.toLowerCase().trim() === "funny") score++;
-        if(document.getElementById('ex1').value.toLowerCase().includes("cool")) score++;
-        if(document.getElementById('ex3').value.toLowerCase().includes("get it")) score++;
+        // Vocab Check (Based on Page 27, Exercise 1)
+        const vocabAnswers = ["costume", "control", "strings", "funny", "comedian", "funny", "cool", "man", "body", "go"];
+        for(let i=1; i<=10; i++) {
+            let val = document.getElementById('v'+i).value.toLowerCase().trim();
+            if(val === vocabAnswers[i-1]) score++;
+        }
 
-        alert(`Great job, ${name}!\nActivity submitted to teacher.`);
+        // Questions Check (Keywords)
+        if (document.getElementById('q1').value.toLowerCase().includes("long time")) score++;
+        if (document.getElementById('q2').value.toLowerCase().includes("was seven")) score++;
+        if (document.getElementById('q3').value.toLowerCase().includes("last year")) score++;
+
+        // Expressions Check
+        const expAnswers = ["cool", "no idea", "get it", "no idea", "cool", "get it"];
+        for(let i=1; i<=6; i++) {
+            if(document.getElementById('ex'+i).value.toLowerCase().includes(expAnswers[i-1])) score++;
+        }
+
+        alert(`Great job, ${name}!\nYour Score: ${score} / ${totalPoints}`);
         localStorage.setItem("wb_unit7_status", "locked");
         showLockScreen();
     }
@@ -207,20 +224,13 @@
         } else {
             document.getElementById('password-error').style.display = 'block';
         }
-    }   
-        // 1. Detect if the user switches tabs or minimizes the window
+    }
+
     document.addEventListener("visibilitychange", function() {
         if (document.hidden && document.getElementById('exam-content').style.display === 'block') {
-            lockActivity();
-            alert("Activity Locked: You left the page during the exam.");
-        }
-    });
-
-       // 2. Detect if the window loses focus (e.g., clicking on another app or a popup)
-    window.addEventListener("blur", function() {
-        if (document.getElementById('exam-content').style.display === 'block') {
-            lockActivity();
-            alert("Activity Locked: Window lost focus.");
+            alert("Security Alert: Leaving the page will lock the activity!");
+            localStorage.setItem("wb_unit7_status", "locked");
+            showLockScreen();
         }
     });
 </script>
