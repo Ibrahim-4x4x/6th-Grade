@@ -171,7 +171,7 @@
 </div>
 
 <script>
-    const TEACHER_SECRET = "0101"; 
+    const TEACHER_SECRET = "8787"; 
 
     function startExam() {
         if (localStorage.getItem("wb_unit7_status") === "locked") {
