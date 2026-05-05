@@ -167,7 +167,7 @@
     const TEACHER_SECRET = "0808"; 
 
     function startExam() {
-        if (localStorage.getItem("wb_unit3_status") === "locked") {
+        if (localStorage.getItem("wb_unit7_status") === "locked") {
             showLockScreen();
             return;
         }
@@ -190,7 +190,7 @@
         if(document.getElementById('ex3').value.toLowerCase().includes("get it")) score++;
 
         alert(`Great job, ${name}!\nActivity submitted to teacher.`);
-        localStorage.setItem("wb_unit3_status", "locked");
+        localStorage.setItem("wb_unit7_status", "locked");
         showLockScreen();
     }
 
@@ -202,7 +202,7 @@
 
     function unlockExam() {
         if (document.getElementById('teacher-password').value === TEACHER_SECRET) {
-            localStorage.removeItem("wb_unit3_status");
+            localStorage.removeItem("wb_unit7_status");
             location.reload();
         } else {
             document.getElementById('password-error').style.display = 'block';
