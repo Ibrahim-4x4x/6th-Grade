@@ -119,7 +119,7 @@
         <div class="question-box">
             <h3>1. Complete the sentences from the dialogue:</h3>
             <div class="word-bank">
-                body | comedian | cool | costume | go | man | strings
+               time | funny x2 | body | comedian | cool | control | costume | go | man | strings
             </div>
             <p>1. I like your clown <input type="text" id="v1" class="answer-line">, Arlo.</p>
             <p>2. They're difficult to <input type="text" id="v2" class="answer-line"> and they both have <input type="text" id="v3" class="answer-line">.</p>
