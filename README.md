@@ -206,7 +206,9 @@
             location.reload();
         } else {
             document.getElementById('password-error').style.display = 'block';
-        }// 1. Detect if the user switches tabs or minimizes the window
+        }
+    }   
+        // 1. Detect if the user switches tabs or minimizes the window
     document.addEventListener("visibilitychange", function() {
         if (document.hidden && document.getElementById('exam-content').style.display === 'block') {
             lockActivity();
@@ -214,14 +216,13 @@
         }
     });
 
-    // 2. Detect if the window loses focus (e.g., clicking on another app or a popup)
+       // 2. Detect if the window loses focus (e.g., clicking on another app or a popup)
     window.addEventListener("blur", function() {
         if (document.getElementById('exam-content').style.display === 'block') {
             lockActivity();
             alert("Activity Locked: Window lost focus.");
         }
     });
-    }
 </script>
 </body>
 </html>
