@@ -1,4 +1,4 @@
-<--!DOCTYPE html-->
+<!--DOCTYPE html-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -107,7 +107,7 @@
 <div id="main-container">
     <div id="start-area" style="text-align: center; padding: 50px;">
         <img src="https://img.icons8.com/color/96/000000/clown.png" alt="Show"><br>
-        <h2>English Workbook - Unit 3</h2>
+        <h2>English Workbook - Unit 7</h2>
         <h3>Lesson 2: WOW! Team Talk</h3>
         <p style="color: #6c757d;">Focus: Puppeteers, Comedians, and Talent Shows</p>
         <button class="btn btn-start" onclick="startExam()">Start Practice Now</button>
