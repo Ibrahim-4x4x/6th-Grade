@@ -340,7 +340,7 @@
     </style>
     <script>
         /* ===================== GOOGLE SHEETS INTEGRATION ===================== */
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3KEwFFzzZyJP-pETrU2wWN9J5aWtZ4tdKwECKBD8UDGW5wEUInQQkxLyzonRyDOFXQw/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBUIVK2z3sqsl8pQ5mX6yIlZxOxcvIFtpmqEugZQcarpyOKUkxa1uUIY-wc2ewKFB8/exec"; 
         
         let globalStudentId = "";
         let globalStudentName = "";
