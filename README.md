@@ -1,236 +1,826 @@
-<!--DOCTYPE html-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7th Grade English - Unit 7 Lesson 2 (Workbook)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🔒 Secure Worksheet: Action Pack 6 (Unit 7) + Google Sheets Lock</title>
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            line-height: 1.6; 
-            max-width: 850px; 
-            margin: auto; 
-            padding: 20px; 
-            background-color: #e9ecef; 
-            -webkit-user-select: none; 
-            user-select: none; 
-        }
-        
-        #main-container { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            position: relative; 
-        }
-        
-        #exam-content { display: none; }
-
-        #lock-screen {
-            display: none; 
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%;
-            background: white; 
-            color: #d9534f; 
-            text-align: center; 
-            padding-top: 50px; 
-            z-index: 9999;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .header { 
-            text-align: center; 
-            border-bottom: 3px solid #007bff; 
-            margin-bottom: 25px; 
+        body {
+            background: #eef2f5;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 40px 20px;
+            color: #1e2a3a;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media print {
+            body { display: none !important; }
+        }
+
+        body.locked .worksheet-container,
+        body.sheet-locked .worksheet-container {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        body.locked .lock-overlay,
+        body.sheet-locked .sheet-lock-overlay {
+            display: flex;
+        }
+
+        .lock-overlay, .sheet-lock-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', system-ui;
+        }
+
+        .lock-card, .sheet-lock-card {
+            background: white;
+            max-width: 460px;
+            width: 90%;
+            padding: 32px 28px;
+            border-radius: 48px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.2s ease;
+        }
+
+        .sheet-lock-card h2 {
+            color: #d9534f;
+        }
+
+        .lock-card h2 {
+            color: #c4452c;
+        }
+
+        .lock-card p, .sheet-lock-card p {
+            margin-bottom: 24px;
+            color: #2c3e4e;
+        }
+
+        .lock-card input, .sheet-lock-card input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 1rem;
+            border: 2px solid #d4dee8;
+            border-radius: 60px;
+            margin-bottom: 18px;
+            outline: none;
+            text-align: center;
+        }
+
+        .lock-card button, .sheet-lock-card button {
+            background: #1f5a7a;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .error-msg {
+            color: #d9534f;
+            margin-top: 12px;
+            font-size: 0.85rem;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .worksheet-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            padding: 30px 35px 45px;
+            transition: all 0.2s;
+        }
+
+        .student-auth-area {
+            background: #f0f7fc;
+            border-radius: 28px;
+            padding: 20px 28px;
+            margin-bottom: 30px;
+            border: 1px solid #cde1ec;
+            text-align: center;
+        }
+
+        .student-auth-area input {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 40px;
+            border: 1px solid #cbdde9;
+            width: 260px;
+            margin: 10px 8px;
+        }
+
+        .student-auth-area button {
+            background: #1f5a7a;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .auth-error {
+            color: #c0392b;
+            margin-top: 12px;
+            font-size: 0.85rem;
+        }
+
+        .workspace-content {
+            display: none;
+        }
+
+        body.authenticated .workspace-content {
+            display: block;
+        }
+
+        body.authenticated .student-auth-area {
+            display: none;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1f4870, #2a6f8f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border-left: 6px solid #2a6f8f;
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .sub {
+            color: #4b6f8c;
+            margin-bottom: 32px;
+            font-size: 1rem;
+            border-bottom: 2px solid #e2e8f0;
             padding-bottom: 10px;
         }
 
-        .question-box { 
-            margin-bottom: 30px; 
-            padding: 20px; 
-            border: 1px solid #dee2e6; 
-            border-radius: 10px; 
-            background-color: #fff;
+        .activity-card {
+            background: #fefefe;
+            border-radius: 24px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e9edf2;
+        }
+
+        .activity-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: #f8fafc;
+            padding: 16px 24px;
+            border-radius: 24px 24px 0 0;
+            border-bottom: 2px solid #dee4ec;
+            color: #0f3b4f;
+        }
+
+        .activity-content {
+            padding: 20px 28px 28px 28px;
+        }
+
+        .sentence-item {
+            background: #f9fafb;
+            padding: 16px 20px;
+            border-radius: 20px;
+            border: 1px solid #eef2f6;
+            margin-bottom: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sentence-row-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .sentence-text {
+            font-size: 1rem;
+            font-weight: 450;
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .field-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            background: #f9fafb;
+            padding: 12px 18px;
+            border-radius: 18px;
+            border: 1px solid #e9edf2;
+        }
+
+        .field-label {
+            font-weight: 600;
+            min-width: 40px;
+            color: #1f4e6e;
+        }
+
+        .explanation-input {
+            width: 100%;
+            padding: 10px 16px;
+            border-radius: 14px;
+            border: 1px solid #cddfea;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .btn-check {
+            background: #1f5a7a;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 12px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn-check:hover {
+            background: #0f415b;
+            transform: scale(0.98);
+        }
+
+        .score-area {
+            background: #eef3f7;
+            border-radius: 28px;
+            padding: 16px 25px;
+            margin: 28px 0 10px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 1px solid #cde1ec;
+        }
+
+        .example-text {
+            color: #3b7c9c;
+            background: #eef5f9;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            margin-bottom: 18px;
         }
 
         .word-bank {
-            background-color: #f8f9fa;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: white;
             padding: 15px;
-            border: 2px dashed #007bff;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-weight: bold;
+            border-radius: 15px;
+            border: 1px dashed #4b6f8c;
+            justify-content: center;
         }
         
-        .answer-line {
-            border: none; 
-            border-bottom: 2px solid #007bff; 
-            width: 150px; 
-            outline: none; 
-            background: transparent;
-            font-size: 16px;
-            text-align: center;
-            color: #495057;
+        .word-bank span {
+            background: #eef3f7;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            color: #1f4870;
+            border: 1px solid #cde1ec;
         }
 
-        .btn { padding: 12px 25px; cursor: pointer; border: none; border-radius: 5px; font-size: 16px; margin: 10px; font-weight: bold; transition: 0.3s; }
-        .btn-start { background-color: #007bff; color: white; width: 280px; }
-        .btn-start:hover { background-color: #0056b3; }
-        .btn-submit { background-color: #28a745; color: white; width: 100%; margin-top: 20px; }
-        .btn-submit:hover { background-color: #218838; }
+        .inline-gap {
+            width: 180px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid #cddfea;
+            text-align: center;
+            font-weight: 600;
+            color: #1f5a7a;
+        }
 
-        @media print { .no-print { display: none; } }
+        @media (max-width: 700px) {
+            .worksheet-container { padding: 20px; }
+            .sentence-row-layout { flex-direction: column; align-items: flex-start; }
+        }
     </style>
+    <script>
+        /* ===================== GOOGLE SHEETS INTEGRATION ===================== */
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3KEwFFzzZyJP-pETrU2wWN9J5aWtZ4tdKwECKBD8UDGW5wEUInQQkxLyzonRyDOFXQw/exec"; 
+        
+        let globalStudentId = "";
+        let globalStudentName = "";
+        let startTime;
+        
+        async function checkStudentInSheet(studentId) {
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+                    body: JSON.stringify({ action: "check", studentId: studentId })
+                });
+                const data = await response.json();
+                return data.exists === true;
+            } catch(err) {
+                console.warn("Sheet check failed", err);
+                return false; 
+            }
+        }
+        
+        async function saveResultToSheet(studentId, studentName, score, timeSpent) {
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ 
+                        action: "save", 
+                        studentId: studentId, 
+                        studentName: studentName,
+                        score: score,
+                        timeSpent: timeSpent
+                    })
+                });
+                return true;
+            } catch(err) {
+                console.error("Failed to save", err);
+                return false;
+            }
+        }
+        
+        /* --- HIGH-SECURITY DEEP STORAGE LOCKING ENGINE (INDEXEDDB) --- */
+        const DB_NAME = "SecuritySubsystem7th";
+        const STORE_NAME = "SessionLocks";
+        let db;
+        
+        function initSecurityDB() {
+            return new Promise((resolve) => {
+                let request = indexedDB.open(DB_NAME, 1);
+                request.onupgradeneeded = function(e) {
+                    let database = e.target.result;
+                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+                        database.createObjectStore(STORE_NAME);
+                    }
+                };
+                request.onsuccess = function(e) {
+                    db = e.target.result;
+                    resolve(true);
+                };
+                request.onerror = function() { resolve(false); };
+            });
+        }
+        
+        function readPermanentLock() {
+            return new Promise((resolve) => {
+                if (!db) { resolve(false); return; }
+                let transaction = db.transaction([STORE_NAME], "readonly");
+                let store = transaction.objectStore(STORE_NAME);
+                let getRequest = store.get("permanently_submitted");
+                getRequest.onsuccess = function() {
+                    resolve(getRequest.result === "true");
+                };
+                getRequest.onerror = function() { resolve(false); };
+            });
+        }
+        
+        function writePermanentLock() {
+            if (!db) return;
+            let transaction = db.transaction([STORE_NAME], "readwrite");
+            let store = transaction.objectStore(STORE_NAME);
+            store.put("true", "permanently_submitted");
+        }
+        
+        function clearPermanentLock() {
+            if (!db) return;
+            let transaction = db.transaction([STORE_NAME], "readwrite");
+            let store = transaction.objectStore(STORE_NAME);
+            store.delete("permanently_submitted");
+        }
+        
+        async function runEnforcementCheck() {
+            await initSecurityDB();
+            const idbLocked = await readPermanentLock();
+            const lsLocked = localStorage.getItem('worksheet_permanently_submitted') === 'true';
+            
+            if (lsLocked || idbLocked) {
+                localStorage.setItem('worksheet_permanently_submitted', 'true');
+                writePermanentLock();
+                showPermanentLockScreen();
+                return true;
+            }
+            return false;
+        }
+        
+        function showPermanentLockScreen() {
+            document.documentElement.innerHTML = `
+            <head><title>Access Denied</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+            <body style="background:#0b0f19;color:#ff6b6b;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;padding:20px;text-align:center;">
+                <h2>🔒 Access Terminated</h2>
+                <p style="color:#a0aec0;margin-top:10px;max-width:400px;">This evaluation session has already been completed and recorded. Re-entry is strictly prohibited.</p>
+                <div style="margin-top:30px; background:#161b26; padding:20px 30px; border-radius:20px;">
+                    <p style="color:#e2e8f0; font-size:0.85rem;">🛠️ TEACHER OVERRIDE:</p>
+                    <input type="password" id="overrideInput" placeholder="Password" style="padding:10px; border-radius:30px; background:#1f2738; color:#fff; text-align:center;">
+                    <button id="overrideBtn" style="background:#2563eb; color:white; border:none; padding:10px 20px; border-radius:30px; margin-top:12px;">Clear Lock & Reload</button>
+                </div>
+            </body>`;
+            setTimeout(() => {
+                document.getElementById('overrideBtn').addEventListener('click', () => {
+                    if (document.getElementById('overrideInput').value.trim() === "0007") {
+                        localStorage.removeItem('worksheet_permanently_submitted');
+                        localStorage.removeItem('worksheet_status_7th');
+                        clearPermanentLock();
+                        sessionStorage.clear();
+                        window.location.reload();
+                    } else alert("❌ Incorrect teacher code.");
+                });
+            }, 50);
+        }
+        
+        history.pushState(null, null, window.location.href);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, window.location.href);
+        });
+        
+        const killInteractions = (e) => e.preventDefault();
+        document.addEventListener('copy', killInteractions);
+        document.addEventListener('cut', killInteractions);
+        document.addEventListener('contextmenu', killInteractions);
+        document.addEventListener('selectstart', killInteractions);
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'a' || e.key === 'u' || e.key === 's' || e.key === 'p')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
 </head>
 <body>
 
-<div id="lock-screen">
-    <h1>⚠️ Activity Locked!</h1>
-    <p style="font-size:20px; color:black;">School Activity Center</p>
-    <p>You have already completed this activity or attempted to leave the page.</p>
-    
-    <div style="margin-top: 30px; border: 2px solid #ccc; display: inline-block; padding: 20px; border-radius: 10px;">
-        <p style="color: blue;">Teacher Unlock Required:</p>
-        <input type="password" id="teacher-password" placeholder="Enter PIN..." style="padding: 10px; font-size: 16px;">
-        <button class="btn" onclick="unlockExam()" style="width: auto; background-color: #28a745; color:white;">Unlock</button>
-        <p id="password-error" style="color: red; display: none;">Incorrect PIN!</p>
+<div id="lockOverlay" class="lock-overlay">
+    <div class="lock-card">
+        <h2>🔒 Activity Locked</h2>
+        <p>⚠️ You left the page or the window lost focus.<br>Enter teacher password to continue.</p>
+        <input type="password" id="passwordInput" placeholder="Enter password" autocomplete="off">
+        <button id="unlockBtn">Unlock Worksheet</button>
+        <div id="lockErrorMsg" class="error-msg"></div>
     </div>
 </div>
 
-<div id="main-container">
-    <div id="start-area" style="text-align: center; padding: 50px;">
-        <img src="https://img.icons8.com/color/96/000000/learning.png" alt="Learn"><br>
-        <h2>Workbook Page 27</h2>
-        <h3>Unit 7: WOW! Team Talk</h3>
-        <p style="color: #6c757d;">Focus: Dialogue Completion and Reading Comprehension</p>
-        <button class="btn btn-start" onclick="startExam()">Start Workbook Activity</button>
+<div id="sheetLockOverlay" class="sheet-lock-overlay">
+    <div class="sheet-lock-card">
+        <h2>🚫 Duplicate Attempt Blocked</h2>
+        <p>This Student ID has already completed the worksheet.<br>Re-entry is not allowed.</p>
+        <p style="font-size:0.8rem;">🔐 Record exists in Google Sheets.</p>
+        <div style="margin-top: 20px;">
+            <input type="password" id="teacherOverrideSheet" placeholder="Teacher password" style="width:100%;">
+            <button id="overrideSheetBtn">Override & Clear</button>
+        </div>
+        <div id="sheetLockError" class="error-msg"></div>
+    </div>
+</div>
+
+<div class="worksheet-container">
+    <h1>📝 Action Pack 6 — Lesson 7</h1>
+    <div class="sub">Places of Entertainment & Present Continuous | 🔐 Anti-Cheat + Google Sheets Lock</div>
+
+    <div class="student-auth-area" id="studentAuthPanel">
+        <h3>🔑 Enter your Details to begin</h3>
+        <input type="text" id="studentIdInput" placeholder="Student ID (e.g., 2024001)" autocomplete="off">
+        <input type="text" id="studentNameInput" placeholder="Full Name in English" autocomplete="off">
+        <button id="startExamBtn">Start Evaluation</button>
+        <div id="authErrorMsg" class="auth-error"></div>
     </div>
 
-    <div id="exam-content">
-        <div class="header">
-            <h1>Unit 7: Lesson 2 Interactive</h1>
-            <div style="display: flex; justify-content: space-between; padding: 10px;">
-                <div><strong>Student:</strong> <input type="text" id="studentName" placeholder="Enter Name..." class="answer-line" style="width: 200px;"></div>
-                <div><strong>Grade:</strong> 6th Grade / Unit 7</div>
-            </div>
-        </div>
-
-        <div class="question-box">
-            <h3>1. Complete the sentences from the dialogue:</h3>
-            <div class="word-bank">
-               time | funny x2 | body | comedian | cool | control | costume | go | man | strings
-            </div>
-            <p>1. I like your clown <input type="text" id="v1" class="answer-line">, Arlo.</p>
-            <p>2. They're difficult to <input type="text" id="v2" class="answer-line"> and they both have <input type="text" id="v3" class="answer-line">.</p>
-            <p>3. Very <input type="text" id="v4" class="answer-line">, Faisal! You should be a <input type="text" id="v5" class="answer-line">.</p>
-            <p>4. That's <input type="text" id="v6" class="answer-line">. Is he <input type="text" id="v7" class="answer-line">?</p>
-            <p>5. What do you call a <input type="text" id="v8" class="answer-line"> with a big nose and no <input type="text" id="v9" class="answer-line">?</p>
-            <p>6. Oh, it's time for the WOW! Talent Show. Let's <input type="text" id="v10" class="answer-line">!</p>
-        </div>
-
-        <div class="question-box">
-            <h3>2. Answer the questions (Complete sentences):</h3>
-            <p>1. Why is Arlo's costume a bit small?<br>
-            <input type="text" id="q1" class="answer-line" style="width: 90%; text-align: left;"></p>
-            
-            <p>2. When did Arlo start to be a puppeteer?<br>
-            <input type="text" id="q2" class="answer-line" style="width: 90%; text-align: left;"></p>
-            
-            <p>3. When did Faisal's uncle become a comedian?<br>
-            <input type="text" id="q3" class="answer-line" style="width: 90%; text-align: left;"></p>
-        </div>
-
-        <div class="question-box">
-            <h3>3. Read and complete the dialogues:</h3>
-            <div class="word-bank">I've no idea | That's cool! | I get it!</div>
-            <div style="font-style: italic; background: #f9f9f9; padding: 15px; border-radius: 5px;">
-                <strong>Dialogue 1:</strong><br>
-                <strong>A:</strong> I'm going to be in the talent show!<br>
-                <strong>B:</strong> <input type="text" id="ex1" class="answer-line">! What's your talent?<br>
-                <strong>A:</strong> Telling jokes! Why can't a bike stand up by itself?<br>
-                <strong>B:</strong> <input type="text" id="ex2" class="answer-line">.<br>
-                <strong>A:</strong> Because it's two-tyred! Do you understand?<br>
-                <strong>B:</strong> Yes, <input type="text" id="ex3" class="answer-line">! That's funny!
-            </div>
-            <br>
-            <div style="font-style: italic; background: #f9f9f9; padding: 15px; border-radius: 5px;">
-                <strong>Dialogue 2:</strong><br>
-                <strong>A:</strong> What time does the talent show start?<br>
-                <strong>B:</strong> <input type="text" id="ex4" class="answer-line">. No one told me.<br>
-                <strong>A:</strong> What are you going to do?<br>
-                <strong>B:</strong> I'm going to make people laugh.<br>
-                <strong>A:</strong> <input type="text" id="ex5" class="answer-line">! So are you a comedian?<br>
-                <strong>B:</strong> No, I'm a puppeteer!<br>
-                <strong>A:</strong> Oh, <input type="text" id="ex6" class="answer-line">! That's funny!
-            </div>
-        </div>
+    <div class="workspace-content" id="workspaceContent">
         
-        <button class="btn btn-submit no-print" onclick="submitExam()">Finish and Show Results</button>
+        <div class="activity-card">
+            <div class="activity-title">📖 1. Read the clues and write the places of entertainment.</div>
+            <div class="activity-content">
+                <div class="word-bank">
+                    <span>planetarium</span> <span>ice rink</span> <span>soft play centre</span> <span>theme park</span> 
+                    <span>circus</span> <span>water park</span> <span>art gallery</span> <span>aquarium</span>
+                </div>
+                <div class="field-row"><span class="field-label">1️⃣</span><span class="sentence-text">You can learn about the planets here.</span> <b>planetarium</b></div>
+                <div class="field-row"><span class="field-label">2️⃣</span><span class="sentence-text">You can play very safely here.</span> <input type="text" id="act1_q2" class="inline-gap"></div>
+                <div class="field-row"><span class="field-label">3️⃣</span><span class="sentence-text">You can swim and go down slides here.</span> <input type="text" id="act1_q3" class="inline-gap"></div>
+                <div class="field-row"><span class="field-label">4️⃣</span><span class="sentence-text">You can see clowns here.</span> <input type="text" id="act1_q4" class="inline-gap"></div>
+                <div class="field-row"><span class="field-label">5️⃣</span><span class="sentence-text">You can do ice skating here.</span> <input type="text" id="act1_q5" class="inline-gap"></div>
+                <div class="field-row"><span class="field-label">6️⃣</span><span class="sentence-text">You can look at paintings here.</span> <input type="text" id="act1_q6" class="inline-gap"></div>
+                <div class="field-row"><span class="field-label">7️⃣</span><span class="sentence-text">You can see a lot of fish here.</span> <input type="text" id="act1_q7" class="inline-gap"></div>
+                <div class="field-row"><span class="field-label">8️⃣</span><span class="sentence-text">You can ride on a roller coaster here.</span> <input type="text" id="act1_q8" class="inline-gap"></div>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <div class="activity-title">✔️ 2. Read and complete. Use the correct form of the Present continuous.</div>
+            <div class="activity-content">
+                <div class="field-row"><span class="field-label">1️⃣</span><span class="sentence-text">We <b>aren't going</b> (not/go) to the safari park tomorrow.</span></div>
+                <div class="field-row"><span class="field-label">2️⃣</span><span class="sentence-text">I <input type="text" id="act2_q2" class="inline-gap"> (stay) with my grandparents next summer.</span></div>
+                <div class="field-row"><span class="field-label">3️⃣</span><span class="sentence-text">Ali <input type="text" id="act2_q3" class="inline-gap"> (not/go) bowling this evening.</span></div>
+                <div class="field-row"><span class="field-label">4️⃣</span><span class="sentence-text">We <input type="text" id="act2_q4" class="inline-gap"> (watch) a puppet show this weekend.</span></div>
+                <div class="field-row"><span class="field-label">5️⃣</span><span class="sentence-text">Amal <input type="text" id="act2_q5" class="inline-gap"> (visit) her cousins in Irbid next week.</span></div>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <div class="activity-title">✍️ 3. Read and write about the children's plans.</div>
+            <div class="activity-content">
+                <div class="example-text">📌 <b>Hints:</b> Use Present Continuous.<br> 
+                <b>Zaid:</b> 1 help Dad (✓), 2 have pizza lunch (✗), 3 visit Grandad (✗).<br>
+                <b>Lama and Dana:</b> 4 go to planetarium (✓), 5 eat lunch at café (✗), 6 play board games (✓).
+                </div>
+                
+                <div class="field-row"><span class="field-label">1️⃣</span><span class="sentence-text">Zaid <b>is helping his dad at home.</b></span></div>
+                <div class="field-row"><span class="field-label">2️⃣</span><span class="sentence-text">He <input type="text" id="act3_q2" class="inline-gap" style="width:250px;"></span></div>
+                <div class="field-row"><span class="field-label">3️⃣</span><span class="sentence-text">He <input type="text" id="act3_q3" class="inline-gap" style="width:250px;"></span></div>
+                <div class="field-row"><span class="field-label">4️⃣</span><span class="sentence-text">Lama and Dana <input type="text" id="act3_q4" class="inline-gap" style="width:250px;"></span></div>
+                <div class="field-row"><span class="field-label">5️⃣</span><span class="sentence-text">They <input type="text" id="act3_q5" class="inline-gap" style="width:250px;"></span></div>
+                <div class="field-row"><span class="field-label">6️⃣</span><span class="sentence-text">They <input type="text" id="act3_q6" class="inline-gap" style="width:250px;"></span></div>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <button class="btn-check" id="checkAllBtn">✅ Auto-Correct & Score</button>
+            <button class="btn-check" id="resetBtn" style="background: #5e7c8c;">⟳ Reset all answers</button>
+        </div>
+        <div id="totalScoreArea" class="score-area">📊 Total score: -- / 16</div>
     </div>
 </div>
 
 <script>
-    const TEACHER_SECRET = "8787"; 
-
-    function startExam() {
-        if (localStorage.getItem("wb_unit7_status") === "locked") {
-            showLockScreen();
+    // --------------------- GOOGLE SHEETS AUTH & LOCK ---------------------
+    const TEACHER_PASSWORD = "0007";
+    let isLocked = false;
+    let hasAnswersBeforeLeave = false;
+    let currentStudentId = "";
+    
+    const lockOverlay = document.getElementById('lockOverlay');
+    const sheetLockOverlay = document.getElementById('sheetLockOverlay');
+    const passwordInput = document.getElementById('passwordInput');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const lockErrorMsg = document.getElementById('lockErrorMsg');
+    const startBtn = document.getElementById('startExamBtn');
+    const studentIdInput = document.getElementById('studentIdInput');
+    const authErrorMsg = document.getElementById('authErrorMsg');
+    const workspace = document.getElementById('workspaceContent');
+    
+    function lockPage(reason = "generic") {
+        if (isLocked) return;
+        isLocked = true;
+        document.body.classList.add('locked');
+        lockOverlay.style.display = 'flex';
+        lockErrorMsg.innerText = '';
+        passwordInput.value = '';
+        localStorage.setItem('worksheet_status_7th', 'locked');
+    }
+    
+    function unlockPage() {
+        if (!isLocked) return;
+        if (passwordInput.value.trim() === TEACHER_PASSWORD) {
+            isLocked = false;
+            document.body.classList.remove('locked');
+            lockOverlay.style.display = 'none';
+            lockErrorMsg.innerText = '';
+            localStorage.removeItem('worksheet_status_7th');
+        } else {
+            lockErrorMsg.innerText = '❌ Incorrect password. Access denied.';
+            passwordInput.value = '';
+        }
+    }
+    
+    unlockBtn.addEventListener('click', unlockPage);
+    passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') unlockPage(); });
+    
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden && !isLocked && document.body.classList.contains('authenticated')) {
+            lockPage('Tab leave caught');
+            alert("Activity Locked: You switched tabs or minimized the page.");
+        }
+    });
+    window.addEventListener("blur", function() {
+        if (!isLocked && document.body.classList.contains('authenticated')) {
+            lockPage('Window lost focus');
+            alert("Activity Locked: Window lost focus.");
+        }
+    });
+    
+    // Updated to only check text inputs since radio buttons were removed
+    function checkAnyAnswer() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        for (let inp of inputs) {
+            if (inp.id !== "studentIdInput" && inp.id !== "studentNameInput" && inp.value.trim() !== "") return true;
+        }
+        return false;
+    }
+    function updateAnswerFlag() { hasAnswersBeforeLeave = checkAnyAnswer(); }
+    document.addEventListener('change', updateAnswerFlag);
+    document.addEventListener('input', updateAnswerFlag);
+    
+    startBtn.addEventListener('click', async () => {
+        const studentId = studentIdInput.value.trim();
+        const studentName = document.getElementById('studentNameInput').value.trim();
+        
+        if (!studentId || !studentName) {
+            authErrorMsg.innerText = "❌ Please enter both Student ID and Name.";
             return;
         }
-        document.getElementById('start-area').style.display = 'none';
-        document.getElementById('exam-content').style.display = 'block';
-    }
+        if (!/^[a-zA-Z\s]+$/.test(studentName)) {
+            authErrorMsg.innerText = "❌ Please write your name in English only.";
+            return;
+        }
 
-    function submitExam() {
+        authErrorMsg.innerText = "⏳ Checking with Google Sheets...";
+        startBtn.disabled = true;
+        
+        try {
+            const exists = await checkStudentInSheet(studentId);
+            if (exists) {
+                authErrorMsg.innerText = "🚫 This Student ID has already completed the worksheet. Access denied.";
+                sheetLockOverlay.style.display = 'flex';
+                document.body.classList.add('sheet-locked');
+                
+                document.getElementById('overrideSheetBtn').onclick = () => {
+                    const pwd = document.getElementById('teacherOverrideSheet').value;
+                    if (pwd === "0007") {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        window.location.reload();
+                    } else {
+                        document.getElementById('sheetLockError').innerText = "Incorrect password.";
+                    }
+                };
+                startBtn.disabled = false;
+                return;
+            }
+        } catch(err) {
+            authErrorMsg.innerText = "⚠️ Could not connect to Google Sheets.";
+            console.warn(err);
+        }
+        
+        globalStudentId = studentId;
+        globalStudentName = studentName;
+        currentStudentId = studentId;
+        startTime = new Date();
+        
+        localStorage.setItem('current_worksheet_student', studentId);
+        document.body.classList.add('authenticated');
+        workspace.style.display = 'block';
+        authErrorMsg.innerText = "";
+        startBtn.disabled = false;
+    });
+    
+    // --------------------- GRADING KEYS ADJUSTED FOR 6TH GRADE PDF ---------------------
+    const act1Keys = {
+        act1_q2: /(soft play centre|soft play center)/i,
+        act1_q3: /(water park)/i,
+        act1_q4: /(circus)/i,
+        act1_q5: /(ice rink)/i,
+        act1_q6: /(art gallery)/i,
+        act1_q7: /(aquarium)/i,
+        act1_q8: /(theme park)/i
+    };
+    
+    const act2Keys = { 
+        act2_q2: /(am staying|'m staying)/i, 
+        act2_q3: /(isn't going|is not going)/i, 
+        act2_q4: /(are watching|'re watching)/i, 
+        act2_q5: /(is visiting|'s visiting)/i 
+    };
+    
+    const act3Keys = {
+        act3_q2: /(isn't having|is not having)/i,
+        act3_q3: /(isn't visiting|is not visiting)/i,
+        act3_q4: /(are going)/i,
+        act3_q5: /(aren't eating|are not eating)/i,
+        act3_q6: /(are playing|'re playing)/i
+    };
+    
+    function calculateScore() {
         let score = 0;
-        const totalPoints = 19;
-        const name = document.getElementById('studentName').value;
-        if (!name) { alert("Please enter your name!"); return; }
-
-        // Vocab Check (Based on Page 27, Exercise 1)
-        const vocabAnswers = ["costume", "control", "strings", "funny", "comedian", "funny", "cool", "man", "body", "go"];
-        for(let i=1; i<=10; i++) {
-            let val = document.getElementById('v'+i).value.toLowerCase().trim();
-            if(val === vocabAnswers[i-1]) score++;
+        let a1Score = 0;
+        for (let id in act1Keys) {
+            let val = document.getElementById(id).value.trim();
+            if (act1Keys[id].test(val)) a1Score++;
         }
-
-        // Questions Check (Keywords)
-        if (document.getElementById('q1').value.toLowerCase().includes("long time")) score++;
-        if (document.getElementById('q2').value.toLowerCase().includes("was seven")) score++;
-        if (document.getElementById('q3').value.toLowerCase().includes("last year")) score++;
-
-        // Expressions Check
-        const expAnswers = ["cool", "no idea", "get it", "no idea", "cool", "get it"];
-        for(let i=1; i<=6; i++) {
-            if(document.getElementById('ex'+i).value.toLowerCase().includes(expAnswers[i-1])) score++;
+        score += a1Score;
+        
+        let a2Score = 0;
+        for (let id in act2Keys) {
+            let val = document.getElementById(id).value.trim();
+            if (act2Keys[id].test(val)) a2Score++;
         }
-
-        alert(`Great job, ${name}!\nYour Score: ${score} / ${totalPoints}`);
-        localStorage.setItem("wb_unit7_status", "locked");
-        showLockScreen();
+        score += a2Score;
+        
+        let a3Score = 0;
+        for (let id in act3Keys) {
+            let val = document.getElementById(id).value.trim();
+            if (act3Keys[id].test(val)) a3Score++;
+        }
+        score += a3Score;
+        
+        return { score, a1Score, a2Score, a3Score };
     }
-
-    function showLockScreen() {
-        document.getElementById('exam-content').style.display = 'none';
-        document.getElementById('start-area').style.display = 'none';
-        document.getElementById('lock-screen').style.display = 'block';
+    
+    async function processGrading() {
+        if (!document.body.classList.contains('authenticated')) {
+            alert("Please enter your details first.");
+            return;
+        }
+        const { score, a1Score, a2Score, a3Score } = calculateScore();
+        
+        const endTime = new Date();
+        const timeDiffSeconds = Math.round((endTime - startTime) / 1000);
+        const minutes = Math.floor(timeDiffSeconds / 60);
+        const seconds = timeDiffSeconds % 60;
+        const timeSpent = `${minutes}m ${seconds}s`;
+        
+        const saved = await saveResultToSheet(globalStudentId, globalStudentName, score, timeSpent);
+        if (!saved) {
+            if (!confirm("⚠️ Failed to reach Google Sheets. Submit locally anyway?")) return;
+        }
+        
+        localStorage.setItem('worksheet_permanently_submitted', 'true');
+        writePermanentLock();
+        
+        alert(`📊 EVALUATION COMPLETED\nName: ${globalStudentName}\nTime: ${timeSpent}\nTotal Score: ${score} / 16`);
+        
+        document.documentElement.innerHTML = `
+        <head><title>Submitted</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+        <body style="background:#0b0f19;color:#4ade80;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;text-align:center;">
+            <h2>✅ Score Logged Successfully</h2>
+            <p style="color:#a0aec0;">Name: ${globalStudentName} | Score: ${score}/16 | Time: ${timeSpent}</p>
+            <div style="margin-top:30px; background:#161b26; padding:20px; border-radius:20px;">
+                <p style="color:#e2e8f0;">🛠️ TEACHER OVERRIDE:</p>
+                <input type="password" id="fallbackOverrideInput" placeholder="Password" style="padding:10px; border-radius:30px;">
+                <button id="fallbackOverrideBtn" style="background:#2563eb; color:white; margin-top:12px; border:none; padding:10px 20px; border-radius:30px;">Clear Lock</button>
+            </div>
+        </body>`;
+        setTimeout(() => {
+            document.getElementById('fallbackOverrideBtn').addEventListener('click', () => {
+                if (document.getElementById('fallbackOverrideInput').value === "0007") {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    clearPermanentLock();
+                    window.location.reload();
+                } else alert("Wrong code.");
+            });
+        }, 50);
     }
-
-    function unlockExam() {
-        if (document.getElementById('teacher-password').value === TEACHER_SECRET) {
-            localStorage.removeItem("wb_unit7_status");
-            location.reload();
+    
+    document.getElementById('checkAllBtn').addEventListener('click', processGrading);
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        if (localStorage.getItem('worksheet_permanently_submitted') === 'true') return;
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(inp => {
+            if(inp.id !== "studentIdInput" && inp.id !== "studentNameInput") inp.value = '';
+        });
+        updateAnswerFlag();
+    });
+    
+    runEnforcementCheck().then(locked => {
+        if (!locked) {
+            document.body.classList.remove('authenticated');
+            workspace.style.display = 'none';
         } else {
-            document.getElementById('password-error').style.display = 'block';
-        }
-    }
-
-    document.addEventListener("visibilitychange", function() {
-        if (document.hidden && document.getElementById('exam-content').style.display === 'block') {
-            alert("Security Alert: Leaving the page will lock the activity!");
-            localStorage.setItem("wb_unit7_status", "locked");
-            showLockScreen();
+            document.body.classList.add('sheet-locked');
         }
     });
 </script>
